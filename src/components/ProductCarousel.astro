@@ -1,0 +1,96 @@
+---
+const sampleProducts = [
+  {
+    id: 1,
+    name: "Premium Leather Bag",
+    image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Premium+Bag",
+    price: "$149.99"
+  },
+  {
+    id: 2,
+    name: "Smart Watch Pro",
+    image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Smart+Watch",
+    price: "$199.99"
+  },
+  {
+    id: 3,
+    name: "Wireless Earbuds",
+    image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Earbuds",
+    price: "$89.99"
+  },
+  {
+    id: 4,
+    name: "Designer Sunglasses",
+    image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Sunglasses",
+    price: "$129.99"
+  },
+  {
+    id: 5,
+    name: "Portable Speaker",
+    image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Speaker",
+    price: "$79.99"
+  },
+  {
+    id: 6,
+    name: "Fitness Tracker",
+    image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Tracker",
+    price: "$59.99"
+  },
+  {
+    id: 7,
+    name: "Coffee Maker",
+    image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Coffee+Maker",
+    price: "$199.99"
+  },
+  {
+    id: 8,
+    name: "Drone Camera",
+    image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Drone",
+    price: "$299.99"
+  }
+];
+---
+
+<div class="bg-gray-50 py-6 md:py-8 overflow-hidden h-[calc(10vh+10rem)] md:h-[calc(10vh+12rem)]">
+  <div class="container mx-auto px-4 md:px-6">
+    <h2 class="text-lg md:text-xl font-semibold mb-4 md:mb-6 text-[var(--text-primary)]">Top Products</h2>
+    <div class="relative">
+      <div class="carousel-track flex gap-4 md:gap-6 animate-scroll">
+        {sampleProducts.map(product => (
+          <a href={`/product/${product.id}`} class="flex-none w-48 md:w-64 group">
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+              <img src={product.image} alt={product.name} class="w-full h-32 md:h-40 object-cover" />
+              <div class="p-3 md:p-4">
+                <h3 class="text-sm md:text-base font-medium text-[var(--text-primary)] group-hover:text-[var(--primary-blue)] transition-colors truncate">{product.name}</h3>
+                <p class="text-sm md:text-base text-[var(--primary-blue)] font-semibold mt-1">{product.price}</p>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-256px * 4 - 1.5rem * 4));
+    }
+  }
+
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
+
+  .carousel-track {
+    width: fit-content;
+  }
+
+  .carousel-track:hover {
+    animation-play-state: paused;
+  }
+</style>

@@ -1,0 +1,138 @@
+---
+// Sample hot products data - would be replaced with real data based on clicks
+const hotProducts = [
+  {
+    id: 1,
+    name: "Ultra HD Smart TV",
+    image: "https://placehold.co/400x300/e4e4e7/ffffff?text=Smart+TV",
+    price: "$699.99",
+    factory: "TechVision Electronics",
+    country: "South Korea",
+    rating: 4.7,
+    reviews: 128
+  },
+  {
+    id: 2,
+    name: "Professional DSLR Camera",
+    image: "https://placehold.co/400x300/e4e4e7/ffffff?text=Camera",
+    price: "$899.99",
+    factory: "OptiTech Industries",
+    country: "Japan",
+    rating: 4.9,
+    reviews: 256
+  },
+  {
+    id: 3,
+    name: "Gaming Laptop Pro",
+    image: "https://placehold.co/400x300/e4e4e7/ffffff?text=Laptop",
+    price: "$1299.99",
+    factory: "PowerTech Systems",
+    country: "Taiwan",
+    rating: 4.8,
+    reviews: 312
+  },
+  {
+    id: 4,
+    name: "Wireless Noise-Canceling Headphones",
+    image: "https://placehold.co/400x300/e4e4e7/ffffff?text=Headphones",
+    price: "$249.99",
+    factory: "AudioMaster Co.",
+    country: "Germany",
+    rating: 4.6,
+    reviews: 189
+  },
+  {
+    id: 5,
+    name: "Smart Home Security System",
+    image: "https://placehold.co/400x300/e4e4e7/ffffff?text=Security",
+    price: "$399.99",
+    factory: "SafeTech Solutions",
+    country: "USA",
+    rating: 4.8,
+    reviews: 167
+  },
+  {
+    id: 6,
+    name: "Electric Stand Mixer",
+    image: "https://placehold.co/400x300/e4e4e7/ffffff?text=Mixer",
+    price: "$299.99",
+    factory: "KitchenPro Appliances",
+    country: "Italy",
+    rating: 4.7,
+    reviews: 203
+  },
+  {
+    id: 7,
+    name: "4K Drone with Camera",
+    image: "https://placehold.co/400x300/e4e4e7/ffffff?text=Drone",
+    price: "$799.99",
+    factory: "SkyTech Innovations",
+    country: "China",
+    rating: 4.5,
+    reviews: 145
+  },
+  {
+    id: 8,
+    name: "Robot Vacuum Cleaner",
+    image: "https://placehold.co/400x300/e4e4e7/ffffff?text=Vacuum",
+    price: "$349.99",
+    factory: "SmartHome Robotics",
+    country: "Singapore",
+    rating: 4.6,
+    reviews: 234
+  }
+];
+---
+
+<div class="bg-gray-50 py-8 md:py-12">
+  <div class="container mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between mb-6 md:mb-8">
+      <h2 class="text-xl md:text-2xl font-semibold text-[var(--text-primary)]">Hot Products</h2>
+      <div class="flex items-center gap-2 text-[var(--primary-blue)]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+        </svg>
+        <span class="text-sm font-medium">Trending Now</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      {hotProducts.map(product => (
+        <a href={`/product/${product.id}`} class="group">
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+            <div class="relative">
+              <img src={product.image} alt={product.name} class="w-full h-48 object-cover" />
+              <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 text-sm font-medium text-[var(--primary-blue)]">
+                {product.price}
+              </div>
+            </div>
+              <div class="p-3 md:p-4">
+                <h3 class="text-sm md:text-base font-medium text-[var(--text-primary)] group-hover:text-[var(--primary-blue)] transition-colors mb-1">
+                {product.name}
+              </h3>
+                <div class="flex items-center gap-1 md:gap-2 text-[var(--text-secondary)] text-xs md:text-sm mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+                <span>{product.factory}</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-1">
+                  <div class="text-[var(--primary-yellow)]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                  </div>
+                          <span class="text-xs md:text-sm font-medium">{product.rating}</span>
+                          <span class="text-[10px] md:text-xs text-[var(--text-secondary)]">({product.reviews})</span>
+                </div>
+                <span class="text-xs text-[var(--text-secondary)]">{product.country}</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>

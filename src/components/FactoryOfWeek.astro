@@ -1,0 +1,80 @@
+---
+// Sample factory data - would be replaced with real data
+const factoryData = {
+  name: "TechCraft Electronics",
+  logo: "https://placehold.co/200x200/e4e4e7/ffffff?text=TechCraft",
+  country: "Taiwan",
+  description: "Leading manufacturer of premium consumer electronics with over 15 years of experience. Specializing in smart home devices, audio equipment, and mobile accessories. Known for innovative design and exceptional build quality.",
+  rating: 4.8,
+  certifications: ["ISO 9001", "Gold Standard"],
+  topProducts: [
+    {
+      name: "Smart Home Hub Pro",
+      image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Smart+Hub",
+      price: "$129.99"
+    },
+    {
+      name: "Wireless Charging Pad",
+      image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Charger",
+      price: "$39.99"
+    },
+    {
+      name: "Bluetooth Speaker",
+      image: "https://placehold.co/300x300/e4e4e7/ffffff?text=Speaker",
+      price: "$89.99"
+    }
+  ]
+};
+---
+
+<div class="bg-white py-8 md:py-12">
+  <div class="container mx-auto px-4 md:px-6">
+    <div class="flex items-center gap-2 mb-6 md:mb-8">
+      <h2 class="text-xl md:text-2xl font-semibold text-[var(--text-primary)]">Factory of the Week</h2>
+      <div class="flex items-center gap-1 text-[var(--primary-yellow)]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+        <span class="text-sm font-medium text-gray-600">{factoryData.rating}</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+      <div class="lg:col-span-1">
+        <div class="bg-gray-50 rounded-xl p-4 md:p-6 flex flex-col items-center text-center">
+          <img src={factoryData.logo} alt={factoryData.name} class="w-24 md:w-32 h-24 md:h-32 rounded-lg shadow-sm mb-4" />
+          <h3 class="text-lg md:text-xl font-semibold text-[var(--text-primary)] mb-1">{factoryData.name}</h3>
+          <div class="flex items-center gap-2 text-[var(--text-secondary)] mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+            </svg>
+            <span>{factoryData.country}</span>
+          </div>
+          <p class="text-[var(--text-secondary)] text-sm mb-6">{factoryData.description}</p>
+          <div class="flex flex-wrap justify-center gap-2">
+            {factoryData.certifications.map(cert => (
+              <span class="bg-blue-50 text-[var(--primary-blue)] text-xs font-medium px-2.5 py-1 rounded">
+                {cert}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2">
+        <h4 class="text-lg font-medium text-[var(--text-primary)] mb-4 md:mb-6">Top Products</h4>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          {factoryData.topProducts.map(product => (
+            <div class="bg-white border border-gray-100 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+              <img src={product.image} alt={product.name} class="w-full h-48 object-cover" />
+              <div class="p-3 md:p-4">
+                <h5 class="text-sm md:text-base font-medium text-[var(--text-primary)] mb-2">{product.name}</h5>
+                <p class="text-sm md:text-base text-[var(--primary-blue)] font-semibold">{product.price}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

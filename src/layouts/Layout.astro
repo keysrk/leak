@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>FactoryLeak.com - Direct Factory Products</title>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--primary-blue: #0052CC;
+		--primary-yellow: #FFB800;
+		--text-primary: #1A1A1A;
+		--text-secondary: #4A4A4A;
+		--background: #FFFFFF;
+	}
+	
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		min-height: 100vh;
+		font-family: 'Inter', sans-serif;
+		color: var(--text-primary);
+		background: var(--background);
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+</style>

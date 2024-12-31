@@ -1,0 +1,251 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Factory Dashboard">
+  <div class="min-h-screen bg-gray-100 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Factory Dashboard</h1>
+        <button id="addProductBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+          Add New Product
+        </button>
+      </div>
+
+      <!-- Factory Info Section -->
+      <div class="bg-white shadow rounded-lg p-6 mb-8">
+        <h2 class="text-xl font-semibold mb-4">Factory Information</h2>
+        <div id="factoryInfo" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <p class="text-sm text-gray-500">Factory Name</p>
+            <p id="factoryName" class="font-medium">Loading...</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Email</p>
+            <p id="factoryEmail" class="font-medium">Loading...</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Location</p>
+            <p id="factoryLocation" class="font-medium">Loading...</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">Description</p>
+            <p id="factoryDescription" class="font-medium">Loading...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Section -->
+      <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-xl font-semibold mb-4">Products</h2>
+        <div id="productsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Products will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="productModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden">
+      <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+          <h3 id="modalTitle" class="text-lg font-semibold mb-4">Add New Product</h3>
+          <form id="productForm" class="space-y-4">
+            <input type="hidden" id="productId">
+            <div>
+              <label for="productName" class="block text-sm font-medium text-gray-700">Product Name</label>
+              <input type="text" id="productName" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+            </div>
+            <div>
+              <label for="productDescription" class="block text-sm font-medium text-gray-700">Description</label>
+              <textarea id="productDescription" name="description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+            </div>
+            <div>
+              <label for="productPrice" class="block text-sm font-medium text-gray-700">Price</label>
+              <input type="number" id="productPrice" name="price" required min="0" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+            </div>
+            <div>
+              <label for="productImages" class="block text-sm font-medium text-gray-700">Images</label>
+              <input type="file" id="productImages" name="images" multiple accept="image/*" class="mt-1 block w-full">
+            </div>
+            <div class="flex justify-end gap-4 mt-6">
+              <button type="button" id="cancelBtn" class="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
+              <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Save Product</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+interface Factory {
+  id: string;
+  name: string;
+  email: string;
+  location: string;
+  description: string;
+}
+
+interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  images: string[];
+}
+
+const token = localStorage.getItem('factoryToken');
+if (!token) {
+  window.location.href = '/factory/login';
+}
+
+const headers = {
+  'Authorization': `Bearer ${token}`,
+  'Content-Type': 'application/json'
+};
+
+// DOM Elements
+const productModal = document.getElementById('productModal') as HTMLDivElement;
+const productForm = document.getElementById('productForm') as HTMLFormElement;
+const addProductBtn = document.getElementById('addProductBtn') as HTMLButtonElement;
+const cancelBtn = document.getElementById('cancelBtn') as HTMLButtonElement;
+const modalTitle = document.getElementById('modalTitle') as HTMLHeadingElement;
+const productsList = document.getElementById('productsList') as HTMLDivElement;
+const productIdInput = document.getElementById('productId') as HTMLInputElement;
+
+// Load factory information
+const loadFactoryInfo = async () => {
+  try {
+    const response = await fetch('http://localhost:5000/api/auth/me', { headers });
+    if (!response.ok) throw new Error('Failed to load factory info');
+    
+    const factory: Factory = await response.json();
+    
+    document.getElementById('factoryName')!.textContent = factory.name;
+    document.getElementById('factoryEmail')!.textContent = factory.email;
+    document.getElementById('factoryLocation')!.textContent = factory.location;
+    document.getElementById('factoryDescription')!.textContent = factory.description;
+  } catch (error) {
+    console.error('Error loading factory info:', error);
+  }
+};
+
+// Load products
+const loadProducts = async () => {
+  try {
+    const response = await fetch('http://localhost:5000/api/products', { headers });
+    if (!response.ok) throw new Error('Failed to load products');
+    
+    const products: Product[] = await response.json();
+    productsList.innerHTML = products.map(product => `
+      <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+        <div class="aspect-w-16 aspect-h-9 mb-4">
+          <img src="${product.images[0] || '/placeholder.jpg'}" alt="${product.name}" class="object-cover rounded-md">
+        </div>
+        <h3 class="font-semibold text-lg mb-2">${product.name}</h3>
+        <p class="text-gray-600 text-sm mb-2">${product.description}</p>
+        <p class="text-indigo-600 font-medium">$${product.price.toFixed(2)}</p>
+        <div class="flex justify-end gap-2 mt-4">
+          <button onclick="editProduct('${product._id}')" class="text-indigo-600 hover:text-indigo-700">Edit</button>
+          <button onclick="deleteProduct('${product._id}')" class="text-red-600 hover:text-red-700">Delete</button>
+        </div>
+      </div>
+    `).join('');
+  } catch (error) {
+    console.error('Error loading products:', error);
+  }
+};
+
+// Show modal
+const showModal = () => {
+  productModal.classList.remove('hidden');
+  productForm.reset();
+  productIdInput.value = '';
+  modalTitle.textContent = 'Add New Product';
+};
+
+// Hide modal
+const hideModal = () => {
+  productModal.classList.add('hidden');
+  productForm.reset();
+};
+
+// Edit product
+const editProduct = async (productId: string) => {
+  try {
+    const response = await fetch(`http://localhost:5000/api/products/${productId}`, { headers });
+    if (!response.ok) throw new Error('Failed to load product');
+    
+    const product = await response.json();
+    productIdInput.value = product._id;
+    (document.getElementById('productName') as HTMLInputElement).value = product.name;
+    (document.getElementById('productDescription') as HTMLTextAreaElement).value = product.description;
+    (document.getElementById('productPrice') as HTMLInputElement).value = product.price.toString();
+    
+    modalTitle.textContent = 'Edit Product';
+    showModal();
+  } catch (error) {
+    console.error('Error loading product:', error);
+  }
+};
+
+// Delete product
+const deleteProduct = async (productId: string) => {
+  if (!confirm('Are you sure you want to delete this product?')) return;
+  
+  try {
+    const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
+      method: 'DELETE',
+      headers
+    });
+    
+    if (!response.ok) throw new Error('Failed to delete product');
+    loadProducts();
+  } catch (error) {
+    console.error('Error deleting product:', error);
+  }
+};
+
+// Event Listeners
+addProductBtn.addEventListener('click', showModal);
+cancelBtn.addEventListener('click', hideModal);
+
+productForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formData = new FormData(e.target as HTMLFormElement);
+  const productId = productIdInput.value;
+  const url = productId
+    ? `http://localhost:5000/api/products/${productId}`
+    : 'http://localhost:5000/api/products';
+  const method = productId ? 'PATCH' : 'POST';
+  
+  try {
+    const response = await fetch(url, {
+      method,
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      body: formData
+    });
+    
+    if (!response.ok) throw new Error('Failed to save product');
+    
+    hideModal();
+    loadProducts();
+  } catch (error) {
+    console.error('Error saving product:', error);
+  }
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  loadFactoryInfo();
+  loadProducts();
+});
+
+// Make functions available globally
+(window as any).editProduct = editProduct;
+(window as any).deleteProduct = deleteProduct;
+</script>
+</Layout>

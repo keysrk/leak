@@ -1,0 +1,167 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+
+export async function getStaticPaths() {
+  // This would typically come from a database or API
+  const products = [
+    {
+      id: 1,
+      name: "Ultra HD Smart TV - 65\" OLED",
+      price: "$1,499.99",
+      images: [
+        "https://placehold.co/800x600/e4e4e7/ffffff?text=TV+Main",
+        "https://placehold.co/800x600/e4e4e7/ffffff?text=TV+Side",
+        "https://placehold.co/800x600/e4e4e7/ffffff?text=TV+Ports",
+        "https://placehold.co/800x600/e4e4e7/ffffff?text=TV+Remote"
+      ],
+      description: "Experience stunning picture quality with our latest OLED TV. Features include AI-powered upscaling, HDR10+, and smart home integration.",
+      specifications: [
+        "Resolution: 4K Ultra HD (3840 x 2160)",
+        "HDR: HDR10+ certified",
+        "Smart Features: Voice control, App support",
+        "Connectivity: 4x HDMI 2.1, 3x USB",
+        "Audio: 60W 2.2 Channel"
+      ],
+      factory: {
+        id: "techvision",
+        name: "TechVision Electronics",
+        logo: "https://placehold.co/200x200/e4e4e7/ffffff?text=TechVision",
+        country: "South Korea",
+        rating: 4.7,
+        website: "https://techvision.example.com",
+        certifications: ["ISO 9001", "Gold Standard"]
+      }
+    },
+    {
+      id: 2,
+      name: "Smart Home Hub Pro",
+      price: "$129.99",
+      images: [
+        "https://placehold.co/800x600/e4e4e7/ffffff?text=Hub+Main",
+        "https://placehold.co/800x600/e4e4e7/ffffff?text=Hub+Side",
+        "https://placehold.co/800x600/e4e4e7/ffffff?text=Hub+Back",
+        "https://placehold.co/800x600/e4e4e7/ffffff?text=Hub+App"
+      ],
+      description: "Control your entire smart home with our advanced hub. Compatible with all major smart home devices and platforms.",
+      specifications: [
+        "Connectivity: WiFi 6, Bluetooth 5.0, Zigbee",
+        "Voice Assistants: Alexa, Google Assistant",
+        "Power: USB-C (5V/2A)",
+        "Range: Up to 100m",
+        "App Support: iOS and Android"
+      ],
+      factory: {
+        id: "techvision",
+        name: "TechVision Electronics",
+        logo: "https://placehold.co/200x200/e4e4e7/ffffff?text=TechVision",
+        country: "South Korea",
+        rating: 4.7,
+        website: "https://techvision.example.com",
+        certifications: ["ISO 9001", "Gold Standard"]
+      }
+    }
+  ];
+
+  return products.map(product => ({
+    params: { id: product.id.toString() },
+    props: { product }
+  }));
+}
+
+const { product } = Astro.props;
+---
+
+<Layout>
+  <Header />
+  <main>
+    <div class="bg-white">
+      <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+          {/* Product Images */}
+          <div class="space-y-3 md:space-y-4">
+            <div class="bg-gray-50 rounded-xl overflow-hidden">
+              <img src={product.images[0]} alt={product.name} class="w-full h-[300px] md:h-[400px] object-cover" />
+            </div>
+            <div class="grid grid-cols-3 gap-3 md:gap-4">
+              {product.images.slice(1).map(image => (
+                <div class="bg-gray-50 rounded-lg overflow-hidden">
+                  <img src={image} alt={product.name} class="w-full h-24 object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Product Info */}
+          <div>
+            <h1 class="text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-3 md:mb-4">{product.name}</h1>
+            <div class="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+              <span class="text-xl md:text-2xl font-bold text-[var(--primary-blue)]">{product.price}</span>
+              <div class="h-6 w-[1px] bg-gray-200"></div>
+              <div class="flex items-center gap-1">
+                <div class="text-[var(--primary-yellow)]">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                  </svg>
+                </div>
+                <span class="font-medium">{product.factory.rating}</span>
+              </div>
+            </div>
+
+            {/* Factory Info */}
+            <div class="bg-gray-50 rounded-xl p-4 md:p-6 mb-6 md:mb-8">
+              <div class="flex items-center gap-4 mb-4">
+                <img src={product.factory.logo} alt={product.factory.name} class="w-16 h-16 rounded-lg" />
+                <div>
+                  <h3 class="font-semibold text-[var(--text-primary)]">{product.factory.name}</h3>
+                  <div class="flex items-center gap-2 text-[var(--text-secondary)] text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+                    </svg>
+                    <span>{product.factory.country}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2 mb-4">
+                {product.factory.certifications.map(cert => (
+                  <span class="bg-blue-50 text-[var(--primary-blue)] text-xs font-medium px-2.5 py-1 rounded">
+                    {cert}
+                  </span>
+                ))}
+              </div>
+              <div class="flex flex-col md:flex-row gap-3 md:gap-4">
+                <a href={`/factory/${product.factory.id}`} class="flex-1 inline-flex justify-center items-center px-4 py-2 border border-[var(--primary-blue)] text-[var(--primary-blue)] font-medium rounded-lg hover:bg-blue-50 transition-colors">
+                  View Factory Profile
+                </a>
+                <a href={product.factory.website} target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex justify-center items-center px-4 py-2 bg-[var(--primary-blue)] text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                  Visit Factory Website
+                </a>
+              </div>
+            </div>
+
+            {/* Product Description */}
+            <div class="mb-6 md:mb-8">
+              <h2 class="text-lg md:text-xl font-semibold text-[var(--text-primary)] mb-3 md:mb-4">Description</h2>
+              <p class="text-sm md:text-base text-[var(--text-secondary)] leading-relaxed">{product.description}</p>
+            </div>
+
+            {/* Specifications */}
+            <div>
+              <h2 class="text-lg md:text-xl font-semibold text-[var(--text-primary)] mb-3 md:mb-4">Specifications</h2>
+              <ul class="space-y-2">
+                {product.specifications.map(spec => (
+                  <li class="flex items-center gap-2 text-[var(--text-secondary)]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--primary-blue)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    {spec}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
