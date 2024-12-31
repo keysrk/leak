@@ -1,28 +1,40 @@
-[debug] [2024-12-31T05:25:40.666Z] ----------------------------------------------------------------------
-[debug] [2024-12-31T05:25:40.669Z] Command:       /nix/store/if6aqyl3sl0hz14a12mndj35swb1mcwi-nodejs-20.17.0/bin/node /nix/store/wg0myk7djggj0f2327nkpm9r2w8q6lp8-firebase-tools-13.27.0/lib/node_modules/firebase-tools/lib/bin/firebase.js init hosting
-[debug] [2024-12-31T05:25:40.670Z] CLI Version:   13.27.0
-[debug] [2024-12-31T05:25:40.670Z] Platform:      linux
-[debug] [2024-12-31T05:25:40.670Z] Node Version:  v20.17.0
-[debug] [2024-12-31T05:25:40.670Z] Time:          Tue Dec 31 2024 05:25:40 GMT+0000 (Coordinated Universal Time)
-[debug] [2024-12-31T05:25:40.670Z] ----------------------------------------------------------------------
+[debug] [2024-12-31T05:44:29.316Z] ----------------------------------------------------------------------
+[debug] [2024-12-31T05:44:29.324Z] Command:       /nix/store/if6aqyl3sl0hz14a12mndj35swb1mcwi-nodejs-20.17.0/bin/node /home/user/leak/node_modules/.bin/firebase init hosting
+[debug] [2024-12-31T05:44:29.326Z] CLI Version:   13.29.1
+[debug] [2024-12-31T05:44:29.327Z] Platform:      linux
+[debug] [2024-12-31T05:44:29.327Z] Node Version:  v20.17.0
+[debug] [2024-12-31T05:44:29.328Z] Time:          Tue Dec 31 2024 05:44:29 GMT+0000 (Coordinated Universal Time)
+[debug] [2024-12-31T05:44:29.328Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2024-12-31T05:25:40.679Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2024-12-31T05:25:40.679Z] > authorizing via signed-in user (loganfazakerley@gmail.com)
+[debug] [2024-12-31T05:44:29.342Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-12-31T05:46:15.593Z] ----------------------------------------------------------------------
+[debug] [2024-12-31T05:46:15.596Z] Command:       /nix/store/if6aqyl3sl0hz14a12mndj35swb1mcwi-nodejs-20.17.0/bin/node /home/user/leak/node_modules/.bin/firebase login:ci
+[debug] [2024-12-31T05:46:15.596Z] CLI Version:   13.29.1
+[debug] [2024-12-31T05:46:15.597Z] Platform:      linux
+[debug] [2024-12-31T05:46:15.597Z] Node Version:  v20.17.0
+[debug] [2024-12-31T05:46:15.597Z] Time:          Tue Dec 31 2024 05:46:15 GMT+0000 (Coordinated Universal Time)
+[debug] [2024-12-31T05:46:15.597Z] ----------------------------------------------------------------------
+[debug] 
+[warn] ⚠  Authenticating with a `login:ci` token is deprecated and will be removed in a future major version of `firebase-tools`. Instead, use a service account key with `GOOGLE_APPLICATION_CREDENTIALS`: https://cloud.google.com/docs/authentication/getting-started 
 [info] 
-     ######## #### ########  ######## ########     ###     ######  ########
-     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
-     ######    ##  ########  ######   ########  #########  ######  ######
-     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
-     ##       #### ##     ## ######## ########  ##     ##  ######  ########
-
-You're about to initialize a Firebase project in this directory:
-
-  /home/user/leak
-
+[info] Visit this URL on this device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=1008433515&redirect_uri=http%3A%2F%2Flocalhost%3A9005
 [info] 
-=== Project Setup
+[info] Waiting for authentication...
+[debug] [2024-12-31T05:46:16.903Z] >>> [apiv2][query] POST https://auth.firebase.tools/attest [none]
+[debug] [2024-12-31T05:46:16.925Z] >>> [apiv2][body] POST https://auth.firebase.tools/attest {"session_id":"26fd02c8-c045-46e9-a68e-1d2261eb7917"}
+[debug] [2024-12-31T05:46:17.490Z] <<< [apiv2][status] POST https://auth.firebase.tools/attest 200
+[debug] [2024-12-31T05:46:17.490Z] <<< [apiv2][body] POST https://auth.firebase.tools/attest {"token":"DNShbCqR0wcyLrq5wbtYHlHvGiO4GHnXJN-X1pheeXU"}
 [info] 
-[info] First, let's associate this project directory with a Firebase project.
-[info] You can create multiple project aliases by running firebase use --add, 
-[info] but for now we'll just set up a default project.
+[info] To sign in to the Firebase CLI:
+[info] 
+[info] 1. Take note of your session ID:
+[info] 
+[info]    26FD0
+[info] 
+[info] 2. Visit the URL below on any device and follow the instructions to get your code:
+[info] 
+[info]    https://auth.firebase.tools/login?code_challenge=halCKCsCHccg0MtWea_C2Z58pxKdDZ2fiAePpDaW2wk&session=26fd02c8-c045-46e9-a68e-1d2261eb7917&attest=DNShbCqR0wcyLrq5wbtYHlHvGiO4GHnXJN-X1pheeXU
+[info] 
+[info] 3. Paste or enter the authorization code below once you have it:
 [info] 

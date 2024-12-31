@@ -2,6 +2,46 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch Built-in web server",
+      "type": "php",
+      "request": "launch",
+      "runtimeArgs": [
+        "-dxdebug.mode=debug",
+        "-dxdebug.start_with_request=yes",
+        "-S",
+        "localhost:0"
+      ],
+      "program": "",
+      "cwd": "${workspaceRoot}",
+      "port": 9003,
+      "serverReadyAction": {
+        "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
+        "uriFormat": "http://localhost:%s",
+        "action": "openExternally"
+      }
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Launch",
+      "program": "${workspaceFolder}/<program>",
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Cargo test",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--lib"
+        ]
+      },
+      "args": []
+    },
+    {
       "command": "./node_modules/.bin/astro dev",
       "name": "Development server",
       "request": "launch",
